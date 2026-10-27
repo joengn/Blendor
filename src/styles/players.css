@@ -1,0 +1,179 @@
+/* Every seat uses the same panel component and dimensions. */
+.canvas-world:has(.players-4),
+.canvas-world:has(.players-3) {
+  width: 1364px;
+}
+.canvas-world:has(.players-2) {
+  width: 668px;
+}
+.canvas-world .table-layout {
+  width: 100%;
+  grid-template-columns: 320px 620px 320px;
+  gap: 28px;
+  padding: 24px;
+}
+.canvas-world .table-layout.players-2 {
+  grid-template-columns: 620px;
+}
+.canvas-world .table-layout.players-2 .market {
+  grid-column: 1;
+}
+.canvas-world .table-layout.players-3 .market {
+  grid-column: 2;
+  max-width: none;
+}
+.canvas-world .table-layout .seat-panel {
+  width: 320px;
+  max-width: none;
+  min-height: 228px;
+  padding: 14px;
+  justify-self: center;
+  border-radius: 10px;
+}
+.canvas-world .table-layout .seat-top,
+.canvas-world .table-layout .seat-bottom {
+  grid-column: 2;
+}
+.canvas-world .table-layout.players-2 .seat-top,
+.canvas-world .table-layout.players-2 .seat-bottom {
+  grid-column: 1;
+}
+.canvas-world .table-layout .seat-heading {
+  gap: 9px;
+}
+.canvas-world .table-layout .seat-score {
+  margin-left: auto;
+}
+.canvas-world .table-layout .seat-name {
+  min-width: 0;
+  flex: 1;
+}
+.canvas-world .table-layout .seat-name strong {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.panel-collection {
+  display: grid;
+  grid-template-columns: 1fr 92px;
+  gap: 14px 12px;
+  margin-top: 14px;
+}
+.canvas-world .panel-collection > .section-line {
+  grid-column: 1/-1;
+  margin: 0;
+}
+.canvas-world .panel-collection > .player-gems {
+  grid-column: 1/-1;
+  margin: 0;
+}
+.canvas-world .table-layout .player-gems {
+  display: grid;
+  grid-template-columns: repeat(6, 22px);
+  gap: 9px;
+}
+.canvas-world .table-layout .player-gem {
+  width: 22px;
+  min-width: 22px;
+  height: 22px;
+  font-size: 10px;
+}
+.canvas-world .table-layout .bonus-stacks {
+  margin-top: 9px;
+  gap: 5px;
+}
+.canvas-world .table-layout .card-pile {
+  max-width: 28px;
+}
+.canvas-world .table-layout .bonus-stack > span.stack-total {
+  display: block;
+  font-size: 9px;
+  margin-top: 6px;
+}
+.canvas-world .table-layout .bonus-stack > span.stack-name {
+  display: none;
+}
+.canvas-world .table-layout .reserve-slots {
+  max-width: none;
+  margin: 9px 0 0;
+  gap: 5px;
+}
+.canvas-world .table-layout .reserve-slot {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3/4;
+}
+.canvas-world .table-layout .reserve-slot.filled {
+  padding: 4px;
+}
+.canvas-world .table-layout .reserve-slot.filled span {
+  font-size: 5px;
+}
+.canvas-world .table-layout .reserve-slot.filled .dot {
+  width: 5px;
+  height: 5px;
+}
+.canvas-world .table-layout .resolve-turn {
+  margin: 12px 0 0;
+  width: 100%;
+}
+.sidebar-toolbar {
+  justify-content: flex-end;
+}
+.new-table-action {
+  margin-top: 8px;
+  min-height: 34px;
+}
+/* The line ends at the button itself; there is no extra popover card. */
+.connected-actions[popover] {
+  width: max-content;
+  max-width: calc(100vw - 90px);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  overflow: visible;
+}
+.connected-actions button,
+.card-action-row > button {
+  min-height: 34px;
+  height: 34px;
+  padding: 7px 14px;
+  font-size: 11px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px var(--shade-0005);
+}
+.card-action-row {
+  gap: 8px;
+}
+.card-action-row > button {
+  min-width: 76px;
+}
+.action-connections[popover] {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  pointer-events: none;
+  overflow: visible;
+}
+.action-connections svg {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+.action-connections path {
+  fill: none;
+  stroke: var(--gem);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  opacity: 0.8;
+}

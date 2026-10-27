@@ -1,0 +1,484 @@
+/* Card proportions and table composition. All ratios are width : height. */
+.canvas-world .market,
+.canvas-world .players-2 .market,
+.canvas-world .players-3 .market {
+  width: 620px;
+  max-width: 100%;
+  justify-self: center;
+}
+.canvas-world .market .nobles {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.canvas-world .noble {
+  height: auto;
+  aspect-ratio: 1/1;
+  padding: 10px;
+}
+.canvas-world .noble .points {
+  font-size: 18px;
+}
+.canvas-world .noble .art svg {
+  width: 25px;
+  height: 25px;
+}
+.canvas-world .noble .frame-label {
+  display: block;
+  font-size: 6px;
+  bottom: 29px;
+}
+.canvas-world .requirements {
+  left: 9px;
+  bottom: 10px;
+  gap: 7px;
+}
+.canvas-world .cost-chip {
+  font-size: 9px;
+}
+.market-with-supply {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 60px;
+  gap: 16px;
+  align-items: start;
+}
+.canvas-world .market-row {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 10px;
+  align-items: start;
+}
+.canvas-world .card,
+.canvas-world .empty-card,
+.canvas-world .deck {
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 3/4;
+  width: 100%;
+  padding: 8px;
+}
+.canvas-world .deck {
+  padding: 0;
+  gap: 8px;
+}
+.canvas-world .deck small {
+  font-size: 7px;
+  letter-spacing: 0.8px;
+}
+.canvas-world .deck b {
+  font-size: 23px;
+}
+.canvas-world .level-dots {
+  font-size: 6px;
+  letter-spacing: 3px;
+}
+.canvas-world .card .art {
+  bottom: 10px;
+}
+.canvas-world .card .art svg {
+  width: 23px;
+  height: 23px;
+}
+.canvas-world .card .frame-label {
+  bottom: 34px;
+  font-size: 6px;
+}
+.canvas-world .costs {
+  bottom: 8px;
+  left: 7px;
+  gap: 4px;
+}
+.canvas-world .bonus,
+.card-popover .bonus {
+  width: 14px;
+  height: 14px;
+  border: 0;
+  border-radius: 2px;
+  background: var(--gem);
+  box-shadow: inset 0 0 0 1px var(--shade-ffffff1a);
+}
+.canvas-world .cost,
+.card-popover .cost {
+  background: var(--gem);
+  border: 0;
+  color: var(--shade-101014);
+  font-weight: 600;
+}
+.canvas-world .supply {
+  margin: 0;
+  padding: 0 0 0 12px;
+  border: 0;
+  border-left: 1px solid var(--border);
+}
+.canvas-world .supply .section-line {
+  justify-content: center;
+  margin-bottom: 17px;
+}
+.canvas-world .supply .section-line h2 {
+  font-size: 8px;
+  line-height: 1.5;
+  text-align: center;
+  font-weight: 500;
+}
+.canvas-world .supply .tokens {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+.canvas-world .supply .token {
+  width: 36px;
+  height: 36px;
+  background: var(--gem);
+  color: var(--shade-0c0c10);
+  border-color: var(--gem);
+  font-weight: 600;
+}
+.canvas-world .supply .token::after {
+  border-color: var(--shade-0808093b);
+  inset: 4px;
+}
+.canvas-world .supply .token:hover:not(:disabled) {
+  background: var(--gem);
+  filter: brightness(1.16);
+  border-color: var(--gem);
+}
+.supply-gem {
+  display: none;
+}
+.bank-count {
+  position: relative;
+  z-index: 1;
+}
+.canvas-world .supply .token:disabled {
+  opacity: 0.45;
+}
+.canvas-world .supply .token[data-token='5'] {
+  opacity: 1;
+  cursor: default;
+}
+.canvas-world .supply .token-name {
+  font-size: 7px;
+  margin-top: 7px;
+}
+/* Each purchased development is a smaller 3:4 card, layered by color. */
+.canvas-world .bonus-stacks {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 5px;
+  align-items: end;
+}
+.canvas-world .bonus-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 0;
+}
+.card-pile {
+  display: grid;
+  width: 100%;
+  padding-top: calc(var(--stack-depth) * 7px);
+  position: relative;
+  max-width: 36px;
+}
+.stacked-card {
+  grid-area: 1/1;
+  width: 100%;
+  aspect-ratio: 3/4;
+  position: relative;
+  border: 1px solid color-mix(in srgb, var(--gem) 65%, var(--border));
+  border-radius: 3px;
+  background: var(--shade-151519);
+  transform: translateY(calc((var(--stack-index, 0) - var(--stack-depth)) * 7px));
+  overflow: hidden;
+}
+.empty-stack {
+  border: 1px dashed var(--shade-35353e);
+  opacity: 0.5;
+}
+.stack-gem {
+  position: absolute;
+  right: 3px;
+  top: 3px;
+  width: 5px;
+  height: 5px;
+  transform: rotate(45deg);
+  background: var(--gem);
+  border-radius: 1px;
+}
+.stack-points {
+  position: absolute;
+  left: 3px;
+  top: 2px;
+  font-size: 6px;
+  color: var(--shade-cfcfd7);
+  line-height: 1;
+}
+.stack-art {
+  position: absolute;
+  inset: 11px 0 2px;
+  display: grid;
+  place-items: center;
+  color: var(--shade-383842);
+}
+.stack-art svg {
+  width: 11px;
+  height: 11px;
+  stroke-width: 1;
+}
+.canvas-world .bonus-stack > span.stack-total {
+  display: block;
+  font-size: 9px;
+  color: var(--shade-b2b2be);
+  margin-top: 6px;
+  line-height: 1;
+}
+.canvas-world .bonus-stack > span.stack-name {
+  display: block;
+  font-size: 6px;
+  margin-top: 4px;
+  color: var(--shade-787884);
+}
+.canvas-world .seat-top .bonus-stack > span.stack-name,
+.canvas-world .collection-lower .bonus-stack > span.stack-name {
+  display: none;
+}
+.canvas-world .seat-top .card-pile {
+  max-width: 27px;
+}
+.canvas-world .collection-lower .card-pile {
+  max-width: 32px;
+}
+.canvas-world .seat-top .seat-resources {
+  align-items: center;
+}
+.canvas-world .collection-lower {
+  align-items: start;
+}
+.canvas-world .reserve-slots {
+  align-items: start;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  max-width: 120px;
+}
+.canvas-world .reserve-slot {
+  height: auto;
+  aspect-ratio: 3/4;
+  width: 100%;
+  position: relative;
+  min-width: 0;
+  border-radius: 3px;
+}
+.canvas-world .reserve-slot.filled {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 5px;
+}
+.canvas-world .reserve-slot.filled .dot {
+  width: 7px;
+  height: 7px;
+  transform: rotate(45deg);
+  border-radius: 1px;
+  align-self: flex-end;
+}
+.canvas-world .reserve-slot.filled span {
+  font-size: 6px;
+  white-space: nowrap;
+}
+/* Actions stay next to the selected card in a native, dismissible popover. */
+.card-popover {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  width: 264px;
+  max-width: calc(100vw - 24px);
+  max-height: calc(100dvh - 80px);
+  overflow: auto;
+  padding: 16px;
+  background: var(--shade-111114);
+  color: var(--text);
+  border: 1px solid color-mix(in srgb, var(--accent) 50%, var(--border));
+  border-radius: 8px;
+  box-shadow: 0 12px 35px var(--shade-0008);
+  z-index: 40;
+  font-size: 12px;
+}
+.card-popover::backdrop {
+  background: transparent;
+  pointer-events: none;
+}
+.popover-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.popover-heading h2 {
+  font-size: 14px;
+  letter-spacing: -0.3px;
+  font-weight: 550;
+  margin: 6px 0 0;
+  line-height: 1.5;
+}
+.popover-heading .eyebrow {
+  font-size: 8px;
+  letter-spacing: 1px;
+}
+.popover-heading .icon {
+  width: 26px;
+  height: 26px;
+  padding: 5px;
+  margin: -3px -4px 0 0;
+}
+.popover-preview {
+  width: 90px;
+  margin: 0 auto 14px;
+  pointer-events: none;
+}
+.popover-preview .card {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3/4;
+  padding: 9px;
+  cursor: default;
+}
+.popover-preview .points {
+  font-size: 17px;
+}
+.popover-preview .frame-label {
+  font-size: 5px;
+  bottom: 31px;
+}
+.popover-preview .cost {
+  height: 16px;
+  min-width: 16px;
+  font-size: 8px;
+}
+.popover-preview .costs {
+  gap: 3px;
+  left: 6px;
+  bottom: 8px;
+}
+.card-facts {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 9px;
+  color: var(--shade-b8b8c3);
+  gap: 10px;
+  padding: 10px 0;
+  border-top: 1px solid var(--shade-2b2b32);
+  border-bottom: 1px solid var(--shade-2b2b32);
+}
+.card-facts > span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.popover-costs {
+  margin: 15px 0;
+}
+.popover-costs > div {
+  display: flex;
+  gap: 6px;
+  margin-top: 9px;
+}
+.popover-costs .cost {
+  height: 22px;
+  min-width: 22px;
+  font-size: 10px;
+}
+.free-card {
+  font-size: 10px;
+  color: var(--accent);
+}
+.card-popover .help {
+  font-size: 9px;
+  line-height: 1.8;
+  margin: 10px 0 0;
+}
+.card-popover .primary {
+  font-size: 11px;
+}
+.card-popover .secondary-action {
+  font-size: 10px;
+}
+.card-popover .payment-card-label {
+  margin-top: 0;
+}
+.card-popover .payment-labels {
+  margin-top: 10px;
+}
+.card-popover .payment-row input {
+  background: var(--shade-19191e);
+  border-color: var(--shade-383840);
+}
+.card-popover .payment-row {
+  border-color: var(--shade-28282e);
+}
+.deck-popover-count {
+  font-size: 30px;
+  font-weight: 400;
+  text-align: center;
+  margin: 22px 0;
+}
+.deck-popover-count > span {
+  display: block;
+  font-size: 9px;
+  color: var(--shade-868692);
+  margin-top: 6px;
+}
+@media (max-width: 760px) {
+  .card-popover {
+    width: 254px;
+    padding: 14px;
+  }
+  .popover-preview {
+    width: 76px;
+  }
+  .card-popover .payment-row {
+    padding: 7px 0;
+  }
+}
+/* A single action row is placed around the card, away from scores and costs. */
+.card-popover.compact-actions {
+  width: 176px;
+  max-width: calc(100vw - 24px);
+  padding: 5px;
+  border-radius: 7px;
+  overflow: visible;
+}
+.card-action-row {
+  display: flex;
+  gap: 5px;
+  align-items: stretch;
+}
+.card-action-row > button {
+  flex: 1;
+  min-width: 0;
+  height: 32px;
+  min-height: 32px;
+  padding: 5px 10px;
+  font-size: 11px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+.card-action-row > button:not(.primary) {
+  background: var(--shade-1c1c21);
+  color: var(--text);
+  border-color: var(--shade-34343c);
+}
+.card-action-row > button:disabled {
+  opacity: 0.4;
+}
+.art .artwork {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.card:has(.artwork) .frame-label,
+.noble:has(.artwork) .frame-label {
+  display: none;
+}
