@@ -138,7 +138,7 @@ export function mountApp({ client }) {
         p.reserved.length < RULES.reserveLimit &&
         client.canAct &&
         g.phase === 'action';
-    return `${connectionLayer('card-connections', ['<path data-card-line="purchase"/><path data-card-line="reserve"/>'])}<section id="card-popover" class="card-popover compact-actions connected-actions" popover="manual" role="dialog" aria-label="Card actions"><div class="card-action-column"><button class="primary" id="purchase" ${canBuy ? '' : 'disabled'} title="${canBuy ? 'Buy this card using your gems and gold' : !c ? 'Select a face-up or reserved card to buy' : 'Not enough gems to buy this card'}">Buy</button><button id="${c ? 'reserve' : 'confirm-deck'}" ${canReserve ? '' : 'disabled'} title="${reserved ? 'This card is already reserved' : p.reserved.length >= RULES.reserveLimit ? 'Your three reserve slots are full' : 'Reserve this card and take gold if available'}">Reserve</button></div></section>`;
+    return `${connectionLayer('card-connections', [canBuy ? '<path data-card-line="purchase"/>' : '', '<path data-card-line="reserve"/>'])}<section id="card-popover" class="card-popover compact-actions connected-actions" popover="manual" role="dialog" aria-label="Card actions"><div class="card-action-column">${canBuy ? '<button class="primary" id="purchase" title="Buy this card using your gems and gold">Buy</button>' : ''}<button id="${c ? 'reserve' : 'confirm-deck'}" ${canReserve ? '' : 'disabled'} title="${reserved ? 'This card is already reserved' : p.reserved.length >= RULES.reserveLimit ? 'Your three reserve slots are full' : 'Reserve this card and take gold if available'}">Reserve</button></div></section>`;
   }
   function positionPopover() {
     const popup = document.querySelector('#card-popover');
@@ -160,8 +160,8 @@ export function mountApp({ client }) {
     popup.style.left = `${position.x}px`;
     popup.style.top = `${position.y}px`;
     popup.dataset.side = position.side;
-    popup.querySelectorAll('button').forEach((button, i) => {
-      const line = document.querySelector(`[data-card-line="${i === 0 ? 'purchase' : 'reserve'}"]`);
+    popup.querySelectorAll('button').forEach((button) => {
+      const line = document.querySelector(`[data-card-line="${button.id === 'purchase' ? 'purchase' : 'reserve'}"]`);
       line.style.setProperty('--gem', 'var(--accent)');
       connectRects(line, a, button.getBoundingClientRect(), position.side);
     });
