@@ -138,7 +138,7 @@ export function mountApp({ client }) {
         p.reserved.length < RULES.reserveLimit &&
         client.canAct &&
         g.phase === 'action';
-    return `${connectionLayer('card-connections', ['<path data-card-line="purchase"/><path data-card-line="reserve"/>'])}<section id="card-popover" class="card-popover compact-actions connected-actions" popover="auto" role="dialog" aria-label="Card actions"><div class="card-action-row"><button class="primary" id="purchase" ${canBuy ? '' : 'disabled'} title="${canBuy ? 'Buy this card using your gems and gold' : !c ? 'Select a face-up or reserved card to buy' : 'Not enough gems to buy this card'}">Buy</button><button id="${c ? 'reserve' : 'confirm-deck'}" ${canReserve ? '' : 'disabled'} title="${reserved ? 'This card is already reserved' : p.reserved.length >= RULES.reserveLimit ? 'Your three reserve slots are full' : 'Reserve this card and take gold if available'}">Reserve</button></div></section>`;
+    return `${connectionLayer('card-connections', ['<path data-card-line="purchase"/><path data-card-line="reserve"/>'])}<section id="card-popover" class="card-popover compact-actions connected-actions" popover="auto" role="dialog" aria-label="Card actions"><div class="card-action-column"><button class="primary" id="purchase" ${canBuy ? '' : 'disabled'} title="${canBuy ? 'Buy this card using your gems and gold' : !c ? 'Select a face-up or reserved card to buy' : 'Not enough gems to buy this card'}">Buy</button><button id="${c ? 'reserve' : 'confirm-deck'}" ${canReserve ? '' : 'disabled'} title="${reserved ? 'This card is already reserved' : p.reserved.length >= RULES.reserveLimit ? 'Your three reserve slots are full' : 'Reserve this card and take gold if available'}">Reserve</button></div></section>`;
   }
   function positionPopover() {
     const popup = document.querySelector('#card-popover');
@@ -150,33 +150,13 @@ export function mountApp({ client }) {
     const canvas = document.querySelector('.canvas-viewport').getBoundingClientRect(),
       a = anchor.getBoundingClientRect(),
       r = popup.getBoundingClientRect(),
-      pad = 12;
-    const protectedAreas = [
-      ...document.querySelectorAll(
-        '.canvas-world .card-top,.canvas-world .costs,.canvas-world .requirements,.canvas-world .supply,.canvas-world .seat-panel,.canvas-world .round-display,.canvas-controls',
-      ),
-    ].map((el) => {
-      const b = el.getBoundingClientRect();
-      return {
-        left: b.left,
-        top: b.top,
-        right: b.right,
-        bottom: b.bottom,
-        weight: el.matches('.card-top,.costs,.requirements') ? 12 : 3,
-      };
-    });
-    const position = placeCardActions(
-      a,
-      { width: r.width, height: r.height },
-      {
-        left: Math.max(pad, canvas.left + pad),
-        top: Math.max(64, canvas.top + pad),
-        right: Math.min(innerWidth - pad, canvas.right - pad),
-        bottom: Math.min(innerHeight - pad, canvas.bottom - pad),
-      },
-      protectedAreas,
-      32,
-    );
+      top = Math.max(64, canvas.top + 12),
+      bottom = Math.min(innerHeight - 12, canvas.bottom - 12);
+    const position = {
+      side: 'right',
+      x: a.right + 32,
+      y: Math.max(top, Math.min((a.top + a.bottom - r.height) / 2, bottom - r.height)),
+    };
     popup.style.left = `${position.x}px`;
     popup.style.top = `${position.y}px`;
     popup.dataset.side = position.side;

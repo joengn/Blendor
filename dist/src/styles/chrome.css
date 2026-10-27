@@ -62,7 +62,7 @@
   border-color: color-mix(in srgb, var(--accent) 28%, var(--border));
 }
 .arena-scroll.canvas-viewport {
-  margin-left: 72px;
+  margin-left: 0px;
 }
 .canvas-controls {
   border-radius: 10px;
@@ -266,7 +266,7 @@
     padding: 7px;
   }
   .arena-scroll.canvas-viewport {
-    margin-left: 60px;
+    margin-left: 0px;
   }
   .canvas-controls {
     right: 12px;

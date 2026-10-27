@@ -442,7 +442,7 @@
     padding: 7px 0;
   }
 }
-/* A single action row is placed around the card, away from scores and costs. */
+/* Card actions form one column to the right of the selected card. */
 .card-popover.compact-actions {
   width: 176px;
   max-width: calc(100vw - 24px);
@@ -450,12 +450,13 @@
   border-radius: 7px;
   overflow: visible;
 }
-.card-action-row {
+.card-action-column {
   display: flex;
+  flex-direction: column;
   gap: 5px;
   align-items: stretch;
 }
-.card-action-row > button {
+.card-action-column > button {
   flex: 1;
   min-width: 0;
   height: 32px;
@@ -465,12 +466,12 @@
   border-radius: 4px;
   font-weight: 500;
 }
-.card-action-row > button:not(.primary) {
+.card-action-column > button:not(.primary) {
   background: var(--shade-1c1c21);
   color: var(--text);
   border-color: var(--shade-34343c);
 }
-.card-action-row > button:disabled {
+.card-action-column > button:disabled {
   opacity: 0.4;
 }
 .art .artwork {
