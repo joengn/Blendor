@@ -63,6 +63,7 @@ const sourceFiles = [
   'README.md',
   '.gitignore',
   '.prettierrc.json',
+  'vercel.json',
 ];
 for (const dir of ['src', 'scripts', 'tests', 'docs', '.github']) {
   sourceFiles.push(...(await files(dir)).map((file) => `${dir}/${file}`));

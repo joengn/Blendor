@@ -4,7 +4,7 @@ A browser-based, local pass-and-play Splendor-style table for 2–4 players. The
 
 ## Run locally
 
-Requires Node.js 22 or later. No third-party runtime or development dependencies are required.
+Requires Node.js 22. No third-party runtime or development dependencies are required.
 
 ```sh
 npm ci
