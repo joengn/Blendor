@@ -255,7 +255,10 @@
     letter-spacing: 1.1px;
   }
   .floating-tools {
-    left: 10px;
+    left: max(12px, env(safe-area-inset-left, 0px));
+    top: auto;
+    bottom: max(12px, env(safe-area-inset-bottom, 0px));
+    transform: none;
     padding: 5px;
     gap: 3px;
     border-radius: 13px;
@@ -269,8 +272,8 @@
     margin-left: 0px;
   }
   .canvas-controls {
-    right: 12px;
-    bottom: 12px;
+    right: max(12px, env(safe-area-inset-right, 0px));
+    bottom: max(12px, env(safe-area-inset-bottom, 0px));
   }
   .canvas-controls .icon {
     width: 27px;
