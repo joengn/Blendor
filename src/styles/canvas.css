@@ -46,7 +46,8 @@
   top: 0;
   width: 1100px;
   transform-origin: 0 0;
-  will-change: transform;
+  /* Redraw at the current zoom; caching this layer as a bitmap blurs enlarged text. */
+  will-change: auto;
 }
 .canvas-world .table-layout {
   width: 1100px;
