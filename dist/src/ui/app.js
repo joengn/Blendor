@@ -138,7 +138,7 @@ export function mountApp({ client }) {
         p.reserved.length < RULES.reserveLimit &&
         client.canAct &&
         g.phase === 'action';
-    return `${connectionLayer('card-connections', ['<path data-card-line="purchase"/><path data-card-line="reserve"/>'])}<section id="card-popover" class="card-popover compact-actions connected-actions" popover="auto" role="dialog" aria-label="Card actions"><div class="card-action-column"><button class="primary" id="purchase" ${canBuy ? '' : 'disabled'} title="${canBuy ? 'Buy this card using your gems and gold' : !c ? 'Select a face-up or reserved card to buy' : 'Not enough gems to buy this card'}">Buy</button><button id="${c ? 'reserve' : 'confirm-deck'}" ${canReserve ? '' : 'disabled'} title="${reserved ? 'This card is already reserved' : p.reserved.length >= RULES.reserveLimit ? 'Your three reserve slots are full' : 'Reserve this card and take gold if available'}">Reserve</button></div></section>`;
+    return `${connectionLayer('card-connections', ['<path data-card-line="purchase"/><path data-card-line="reserve"/>'])}<section id="card-popover" class="card-popover compact-actions connected-actions" popover="manual" role="dialog" aria-label="Card actions"><div class="card-action-column"><button class="primary" id="purchase" ${canBuy ? '' : 'disabled'} title="${canBuy ? 'Buy this card using your gems and gold' : !c ? 'Select a face-up or reserved card to buy' : 'Not enough gems to buy this card'}">Buy</button><button id="${c ? 'reserve' : 'confirm-deck'}" ${canReserve ? '' : 'disabled'} title="${reserved ? 'This card is already reserved' : p.reserved.length >= RULES.reserveLimit ? 'Your three reserve slots are full' : 'Reserve this card and take gold if available'}">Reserve</button></div></section>`;
   }
   function positionPopover() {
     const popup = document.querySelector('#card-popover');
@@ -177,10 +177,8 @@ export function mountApp({ client }) {
     document.querySelector('#card-connections').showPopover();
     popup.showPopover();
     positionPopover();
-    popup.addEventListener('toggle', (e) => {
-      if (e.newState === 'closed') document.querySelector('#card-connections')?.hidePopover();
-      if (e.newState === 'closed' && popup.isConnected) closeCard();
-    });
+    // Dismiss through app state, not asynchronous native toggle events: an old
+    // detached popup must never hide a replacement popup's connection layer.
     popup
       .querySelector('#confirm-deck')
       ?.addEventListener('click', () => transact(COMMANDS.RESERVE_CARD, { level: selectedDeck }));
@@ -532,10 +530,16 @@ export function mountApp({ client }) {
     render();
   }
   const onDocumentClick = (e) => {
-    if (total(pick) && !e.target.closest('#gem-popover,[data-token],[data-zoom]')) {
-      pick = Array(5).fill(0);
-      render();
+    const clearGems = total(pick) && !e.target.closest('#gem-popover,[data-token],[data-zoom]');
+    const clearCard = (selected || selectedDeck !== null) &&
+      !e.target.closest('#card-popover,[data-card],[data-deck],[data-zoom]');
+    if (!clearGems && !clearCard) return;
+    if (clearGems) pick = Array(5).fill(0);
+    if (clearCard) {
+      selected = null;
+      selectedDeck = null;
     }
+    render();
   };
   const onHashChange = () => {
     utility = location.hash === '#rules' ? 'rules' : null;
